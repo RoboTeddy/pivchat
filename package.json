@@ -1,14 +1,15 @@
 {
   "name": "pivchat",
   "version": "0.0.0",
-  "description": "Creates hipchat rooms for pivotal stories that need discussion",
+  "description": "Creates hipchat rooms for pivotal stories that need
+    discussion",
   "author": "Ted Suzman <ted@suzman.net>",
   "dependencies": {
     "underscore": "1.5.x",
     "request": "2.26.x",
-    "async": "0.2.x",
     "par": "0.2.x",
-    "xml2js": "0.2.x"
+    "xml2js": "0.2.x",
+    "baconjs": "0.6.x"
   },
   "engine": "node >= 0.4.1"
 }

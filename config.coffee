@@ -1,15 +1,21 @@
+get = (name) -> process.env[name] || throw "missing env variable: #{name}"
+
 config =
   pivotal:
     baseUrl: "https://www.pivotaltracker.com/services/v3"
-    token: process.env.PIVOTAL_TOKEN || throw "need PIVOTAL_TOKEN env"
+    token: get('PIVOTAL_TOKEN')
+
+    projectId: get('PIVOTAL_PROJECT_ID')
+    labels: ["needs tech-design", "needs design", "needs discussion"]
+
     # everything except 'unscheduled' (i.e. icebox) and 'finished'
+    states: ["unstarted", "started", "delivered", "accepted", "rejected"]
 
   hipchat:
     baseUrl: "https://api.hipchat.com/v1"
-    token: process.env.HIPCHAT_TOKEN || throw "need HIPCHAT_TOKEN env"
+    token: get('HIPCHAT_TOKEN')
 
-  projectId: "642267"
-  labels: ["needs tech-design", "needs design", "needs discussion"]
-  states: ["unstarted", "started", "delivered", "accepted", "rejected"]
+    ownerUserId: get('HIPCHAT_OWNER_USER_ID')
+    notificationRoomId: get('HIPCHAT_NOTIFICATION_ROOM_ID')
 
 module.exports = config
