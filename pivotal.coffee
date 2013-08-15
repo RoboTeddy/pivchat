@@ -1,4 +1,4 @@
-request = require "request"
+request = require("request")
 _ = require('underscore')._
 
 pivotal = 

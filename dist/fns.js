@@ -18,7 +18,7 @@
       return "(P) " + (story.name.substr(0, 35)) + " (" + story.id + ")";
     },
     getRoomTopic: function(story) {
-      return "" + story.name + " (" + (story.labels.join(', ')) + ")";
+      return "" + story.name + " (" + (story.labels.join(', ')) + ") - " + story.url;
     },
     createRoomForStory: function(callHipchat, ownerUserId, story) {
       var room;
@@ -45,6 +45,9 @@
         id = _arg.id;
         return _.pluck(rooms, 'name').join().indexOf(id) === -1;
       });
+    },
+    getRooms: function(callHipchat) {
+      return Bacon.fromNodeCallback(callHipchat, "get", "/rooms/list", {}).map('.rooms');
     },
     getTargetStories: function(callPivotal, projectId, labels, states) {
       var fixedStory, label, parse, r, requests;

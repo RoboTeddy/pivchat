@@ -26,7 +26,7 @@
 
   stories = fns.getTargetStories(callPivotal, projectId, labels, states);
 
-  rooms = Bacon.fromNodeCallback(callHipchat, "get", "/rooms/list", {}).map('.rooms');
+  rooms = fns.getRooms(callHipchat);
 
   stories.combine(rooms, fns.getStoriesWithoutRooms).onValue(function(_stories) {
     _.each(_stories, par(fns.createRoomForStory, callHipchat, ownerUserId));

@@ -7,7 +7,8 @@ pivotal = require('./pivotal')
 
 fns =
   getRoomName: (story) -> "(P) #{story.name.substr(0, 35)} (#{story.id})"
-  getRoomTopic: (story) -> "#{story.name} (#{story.labels.join(', ')})"
+  getRoomTopic: (story) ->
+    "#{story.name} (#{story.labels.join(', ')}) - #{story.url}"
 
   createRoomForStory: (callHipchat, ownerUserId, story) ->
     console.log("Creating room for #{story.name}")
@@ -28,6 +29,9 @@ fns =
 
   getStoriesWithoutRooms: (stories, rooms) ->
     _.filter stories, ({id}) -> _.pluck(rooms, 'name').join().indexOf(id) == -1
+
+  getRooms: (callHipchat) ->
+    Bacon.fromNodeCallback(callHipchat, "get", "/rooms/list", {}).map('.rooms')
 
   getTargetStories: (callPivotal, projectId, labels, states) ->
     # pivotal api returns xml, gaah

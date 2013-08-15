@@ -17,9 +17,9 @@ callHipchat = par hipchat.call, config.hipchat.baseUrl, config.hipchat.token
 } = config
 
 console.log("Updating...")
-stories = fns.getTargetStories(callPivotal, projectId, labels, states)
-rooms = Bacon.fromNodeCallback(callHipchat, "get", "/rooms/list", {})
-  .map('.rooms')
+
+stories = fns.getTargetStories callPivotal, projectId, labels, states
+rooms = fns.getRooms callHipchat 
 
 stories.combine(rooms, fns.getStoriesWithoutRooms).onValue (_stories) ->
   _.each _stories, (par fns.createRoomForStory, callHipchat, ownerUserId)
