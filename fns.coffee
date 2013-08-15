@@ -9,11 +9,12 @@ fns =
   getRoomName: (story) -> "(P) #{story.name.substr(0, 35)} (#{story.id})"
   getRoomTopic: (story) -> "#{story.name} (#{story.labels.join(', ')})"
 
-  createRoomForStory: (callHipchat, story) ->
+  createRoomForStory: (callHipchat, ownerUserId, story) ->
+    console.log("Creating room for #{story.name}")
     room =
-      name: getRoomName(story),
-      topic: getRoomTopic(story),
-      owner_user_id: config.hipchat.ownerUserId
+      name: fns.getRoomName(story),
+      topic: fns.getRoomTopic(story),
+      owner_user_id: ownerUserId
 
     callHipchat "post", "/rooms/create", room
 
@@ -25,13 +26,8 @@ fns =
       message: "@all Hit 'lobby' and join the discussion for '#{story.name}'",
       color: "purple"
 
-  updateHipchat: (callHipchat, notificationRoomId, stories, rooms) ->
-    storiesWithoutRooms = _.filter stories, ({id}) ->
-      _.pluck(rooms, 'name').join().indexOf(id) == -1
-
-    _.each storiesWithoutRooms, (par fns.createRoomForStory, callHipchat)
-    _.each storiesWithoutRooms,
-      (par fns.notifyOfNewRoom, callHipchat, config.hipchat.notificationRoomId)
+  getStoriesWithoutRooms: (stories, rooms) ->
+    _.filter stories, ({id}) -> _.pluck(rooms, 'name').join().indexOf(id) == -1
 
   getTargetStories: (callPivotal, projectId, labels, states) ->
     # pivotal api returns xml, gaah

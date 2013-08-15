@@ -1,8 +1,7 @@
 {
   "name": "pivchat",
   "version": "0.0.0",
-  "description": "Creates hipchat rooms for pivotal stories that need
-    discussion",
+  "description": "Creates hipchat rooms for pivotal stories that need discussion",
   "author": "Ted Suzman <ted@suzman.net>",
   "dependencies": {
     "underscore": "1.5.x",

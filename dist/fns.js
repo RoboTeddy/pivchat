@@ -20,12 +20,13 @@
     getRoomTopic: function(story) {
       return "" + story.name + " (" + (story.labels.join(', ')) + ")";
     },
-    createRoomForStory: function(callHipchat, story) {
+    createRoomForStory: function(callHipchat, ownerUserId, story) {
       var room;
+      console.log("Creating room for " + story.name);
       room = {
-        name: getRoomName(story),
-        topic: getRoomTopic(story),
-        owner_user_id: config.hipchat.ownerUserId
+        name: fns.getRoomName(story),
+        topic: fns.getRoomTopic(story),
+        owner_user_id: ownerUserId
       };
       return callHipchat("post", "/rooms/create", room);
     },
@@ -38,15 +39,12 @@
         color: "purple"
       });
     },
-    updateHipchat: function(callHipchat, notificationRoomId, stories, rooms) {
-      var storiesWithoutRooms;
-      storiesWithoutRooms = _.filter(stories, function(_arg) {
+    getStoriesWithoutRooms: function(stories, rooms) {
+      return _.filter(stories, function(_arg) {
         var id;
         id = _arg.id;
         return _.pluck(rooms, 'name').join().indexOf(id) === -1;
       });
-      _.each(storiesWithoutRooms, par(fns.createRoomForStory, callHipchat));
-      return _.each(storiesWithoutRooms, par(fns.notifyOfNewRoom, callHipchat, config.hipchat.notificationRoomId));
     },
     getTargetStories: function(callPivotal, projectId, labels, states) {
       var fixedStory, label, parse, r, requests;
