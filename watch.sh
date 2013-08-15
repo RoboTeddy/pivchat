@@ -1,1 +1,1 @@
-coffee -cw *.coffee
+coffee -o dist -cw *.coffee
