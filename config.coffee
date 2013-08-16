@@ -6,10 +6,11 @@ config =
     token: get('PIVOTAL_TOKEN')
 
     projectId: get('PIVOTAL_PROJECT_ID')
-    labels: ["needs tech-design", "needs design", "needs discussion"]
+    labels: ["hipchat"]
 
-    # everything except 'unscheduled' (i.e. icebox) and 'finished'
-    states: ["unstarted", "started", "delivered", "accepted", "rejected"]
+    # everything except 'finished'
+    states: ["unstarted", "started", "delivered", "accepted", "rejected",
+        "unscheduled"]
 
   hipchat:
     baseUrl: "https://api.hipchat.com/v1"

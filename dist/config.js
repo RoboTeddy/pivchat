@@ -13,8 +13,8 @@
       baseUrl: "https://www.pivotaltracker.com/services/v3",
       token: get('PIVOTAL_TOKEN'),
       projectId: get('PIVOTAL_PROJECT_ID'),
-      labels: ["needs tech-design", "needs design", "needs discussion"],
-      states: ["unstarted", "started", "delivered", "accepted", "rejected"]
+      labels: ["hipchat"],
+      states: ["unstarted", "started", "delivered", "accepted", "rejected", "unscheduled"]
     },
     hipchat: {
       baseUrl: "https://api.hipchat.com/v1",
